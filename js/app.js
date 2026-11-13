@@ -25,7 +25,24 @@ try { setTheme(localStorage.getItem(LS_THEME) || 'paper'); } catch (e) { setThem
 document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || (e.scale && e.scale !== 1)) e.preventDefault(); }, { passive: false });
 document.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
 const spreadMode = () => false;
-const fitPages = () => document.documentElement.style.setProperty('--pgh', scroller.clientHeight + 'px');
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+// wysokość aplikacji: w trybie ekranu głównego iOS potrafi zgłaszać okno niższe o pasek statusu, więc bierzemy pełną wysokość ekranu
+function appHeight() {
+  const vv = window.visualViewport ? window.visualViewport.height : 0;
+  let h = Math.max(window.innerHeight, vv);
+  if (isStandalone() && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    const portrait = window.innerHeight >= window.innerWidth;
+    const sh = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+    if (sh > h && sh - h < 120) h = sh;
+  }
+  return Math.round(h);
+}
+const fitPages = () => {
+  document.documentElement.style.setProperty('--app-h', appHeight() + 'px');
+  document.documentElement.style.setProperty('--pgh', scroller.clientHeight + 'px');
+};
+if (window.visualViewport) window.visualViewport.addEventListener('resize', () => setTimeout(fitPages, 50));
+fitPages();
 window.addEventListener('resize', fitPages); window.addEventListener('orientationchange', () => setTimeout(fitPages, 200));
 const byId = (id) => pages.findIndex((p) => p.id === id);
 function toast(msg, ms = 2600) {
@@ -353,7 +370,8 @@ function openSettings() {
    <button class="li" data-action="print">${icon('print')}<span><strong>Wersja do druku</strong><small>Wkrótce</small></span></button></div>
    ${standalone ? '' : `<span class="fl">Instalacja</span><div class="note-s">${icon('home')}<span>${ios ? 'W Safari dotknij <b>Udostępnij</b>, potem <b>Do ekranu początkowego</b>. Planer otworzy się jak aplikacja.' : 'Dodaj planer do ekranu startowego z menu przeglądarki.'}</span></div>${deferredInstall ? `<button class="btn-s gold" data-action="install">${icon('plus')}<span>Zainstaluj aplikację</span></button>` : ''}`}
    <span class="fl">Strefa ostrożności</span><button class="li danger" data-action="clear">${icon('trash')}<span><strong>Wyczyść cały planer</strong><small>Nieodwracalne. Najpierw zrób kopię.</small></span></button>
-   <p class="muted ctr">Planer AM 2027 · wersja 1.0</p></div>`, { cls: 'tall' });
+   <p class="muted ctr">Planer AM 2027 · wersja 1.0</p>
+   <p class="muted ctr" style="font-size:11px">Okno ${window.innerHeight}×${window.innerWidth} · ekran ${screen.height}×${screen.width} · aplikacja ${appHeight()} · ${standalone ? 'tryb aplikacji' : 'przeglądarka'}</p></div>`, { cls: 'tall' });
 }
 
 // ---------- dock ----------

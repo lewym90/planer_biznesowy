@@ -19,7 +19,7 @@
 html{-webkit-text-size-adjust:100%;color-scheme:light dark}
 html[data-theme=night]{color-scheme:dark}
 body{margin:0;background:radial-gradient(1100px 560px at 75% -8%,rgba(200,164,77,.16),transparent 62%),radial-gradient(900px 500px at 0% 100%,rgba(200,164,77,.08),transparent 60%),#0B0B0D;background-attachment:fixed;color:var(--bone);font:15px/1.45 var(--text);height:100%;overflow:hidden;overscroll-behavior:none}
-html{height:100%;background:#0B0B0D;-webkit-text-size-adjust:100%;touch-action:manipulation}
+html{background:#0B0B0D;-webkit-text-size-adjust:100%;touch-action:manipulation}
 body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 body.noscroll{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -29,7 +29,7 @@ a{color:inherit}
 .muted{color:var(--ink-2);font-size:.9em}.ctr{text-align:center}
 
 /* ---------- biurko ---------- */
-#desk{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative;padding-left:var(--sa-l,0px);padding-right:var(--sa-r,0px);box-sizing:border-box}
+#desk{position:fixed;top:0;left:0;right:0;height:100vh;height:100dvh;height:var(--app-h,100dvh);display:flex;flex-direction:column;overflow:hidden;padding-left:var(--sa-l,0px);padding-right:var(--sa-r,0px);box-sizing:border-box}
 #scroller{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scroll-behavior:auto}
 #topline{flex:none;width:100%;box-sizing:border-box;padding:calc(8px + var(--sa-t)) 14px 8px;margin:0;background:#0B0B0D;border-bottom:1px solid rgba(200,164,77,.35);display:flex;justify-content:space-between;align-items:center;gap:12px;font:600 10.5px var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
 #topline .brand{display:flex;align-items:center;gap:8px;color:var(--gold-l);white-space:nowrap}
