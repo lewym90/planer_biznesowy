@@ -176,7 +176,7 @@ function dates(S) {
   const F = fields(S, 'dates');
   const n = Number(S.get('dates|_n', 14));
   const pr = (i) => ['W', 'Ś', 'N'].map((x, j) => `<label class="rad s" title="${['Wysoki', 'Średni', 'Niski'][j]}"><input type="radio" name="dates|r${i}.p" data-k="dates|r${i}.p" value="${['Wysoki', 'Średni', 'Niski'][j]}" ${S.get(`dates|r${i}.p`) === ['Wysoki', 'Średni', 'Niski'][j] ? 'checked' : ''}><i></i><span>${x}</span></label>`).join('');
-  const rows = Array.from({ length: n }, (_, i) => `<div class="tr">${F.dt(`r${i}.d`)}<span class="dn" data-dayfor="dates|r${i}.d"></span>${F.in(`r${i}.e`, { ph: i === 0 ? 'Co i kiedy' : '' })}${F.sel(`r${i}.c`, DATE_CATS, { ph: '' })}<span class="prs">${pr(i)}</span>${F.in(`r${i}.n`, { cls: 'hs' })}</div>`).join('');
+  const rows = Array.from({ length: n }, (_, i) => `<div class="tr">${F.dt(`r${i}.d`)}<span class="dn" data-dayfor="dates|r${i}.d"></span>${F.in(`r${i}.e`, { ph: i === 0 ? 'Co i kiedy' : '' })}${F.sel(`r${i}.c`, DATE_CATS, { ph: '' })}${F.sel(`r${i}.p`, ['Wysoki', 'Średni', 'Niski'], { ph: '—', label: 'Priorytet' })}${F.in(`r${i}.n`, { cls: 'hs' })}</div>`).join('');
   const q = [['Q1 (sty–mar)', 'q1'], ['Q2 (kwi–cze)', 'q2'], ['Q3 (lip–wrz)', 'q3'], ['Q4 (paź–gru)', 'q4']];
   const todo = ['Terminy podatkowe i ZUS', 'Odnowienia umów pośrednictwa', 'Ubezpieczenie OC pośrednika', 'Licencje, uprawnienia i szkolenia', 'Spotkania zespołu i podsumowania', 'Prezentacje i nowe oferty', 'Kampanie marketingowe', 'Rozliczenia i podsumowania finansowe', 'Święta i dni wolne'];
   return `${head('calendar', 'WAŻNE DATY <em>i terminy</em>', 'Planuj z wyprzedzeniem. Skup się. Osiągaj więcej.', 'Dobrze zaplanowany harmonogram tworzy więcej możliwości i większy sukces.')}
@@ -377,7 +377,7 @@ function month(S, id) {
   return `<header class="ph mh"><div class="ph-t"><h2 class="mt">${C.MONTHS[m].toUpperCase()}</h2><p class="my"><i></i><span>${y}</span><i></i></p></div>
     <blockquote class="ph-q"><span>“</span>${MONTH_QUOTES[m]}<span>”</span></blockquote><div class="corner"><img src="icons/icon-192.png" alt="" width="40" height="40"></div></header>
   <div class="pg-body">
-   <div class="mcal"><div class="mh-r"><b class="wkh">T</b>${C.DOW3.map((d, i) => `<b class="${i > 4 ? 'we' : ''}">${d.toUpperCase()}</b>`).join('')}</div><div class="mg">${body}</div></div>
+   <div class="mcal"><div class="mh-r"><b class="wkh">TYDZ.</b>${C.DOW3.map((d, i) => `<b class="${i > 4 ? 'we' : ''}">${d.toUpperCase()}</b>`).join('')}</div><div class="mg">${body}</div></div>
    <div class="m-st"><span><b>${st.work}</b> dni roboczych</span><span><b>${st.off}</b> dni wolnych</span><span class="wks">Tygodnie: ${weeks.map((w) => `<a data-go="week:${C.iso(w)}">${C.isoWeek(w).week}</a>`).join('')}</span></div>
    <div class="row2 mb">
     <div class="card">${bar('target', 'NAJWAŻNIEJSZE PRIORYTETY')}<div class="card-b">${Array.from({ length: 5 }, (_, i) => `<div class="cl pr"><b>${i + 1}</b>${F.in('p' + i)}${F.ck('pc' + i)}</div>`).join('')}</div></div>
@@ -404,7 +404,7 @@ function week(S, id) {
   const wl = iw.week === 53 || (iw.week === 1 && mon.getUTCFullYear() === 2026) ? `${iw.week}/2026` : `${iw.week}`;
   return `${head('briefcase', 'TYGODNIOWY PLANER <em>BIZNESOWY</em>', 'Planuj mądrze. Pracuj skupiony. Osiągaj więcej.', '')}
   <div class="pg-body">
-   <div class="row3 wk-top">${fld('calendar', 'Tydzień', `<span class="calc">${C.fmtRange(mon)} <small>· tydz. ${wl} · ${work} dni rob.</small></span>`)}${fld('target', 'Cel tygodnia', F.in('goal', { ph: 'Co musi się wydarzyć?' }))}${fld('star', 'Główny priorytet', F.in('top'))}</div>
+   <div class="row3 wk-top">${fld('calendar', 'Tydzień', `<span class="calc">${C.fmtRange(mon)} <small>· tydzień ${wl} · ${work} dni roboczych</small></span>`)}${fld('target', 'Cel tygodnia', F.in('goal', { ph: 'Co musi się wydarzyć?' }))}${fld('star', 'Główny priorytet', F.in('top'))}</div>
    <div class="wk-main">
     <div class="wk-l">
      <div class="card">${bar('target', 'CELE TYGODNIA')}<div class="card-b">${ckl(F, 'g', 5)}</div></div>

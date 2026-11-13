@@ -371,13 +371,15 @@ $('#dock-set').addEventListener('click', openSettings);
 // ---------- gesty przewracania ----------
 let tx = 0, ty = 0, tt = 0, tracking = false;
 scroller.addEventListener('touchstart', (e) => {
-  tracking = e.touches.length === 1 && !e.target.closest('input,textarea,select,.scrollx,.mcal,.slot');
+  const ae = document.activeElement, typing = ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName) && ae.type !== 'checkbox' && ae.type !== 'radio';
+  const sx = e.target.closest('.scrollx');
+  tracking = e.touches.length === 1 && !typing && !(sx && sx.scrollWidth > sx.clientWidth + 2) && !sheetEl.classList.contains('on');
   if (tracking) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; tt = Date.now(); }
 }, { passive: true });
 scroller.addEventListener('touchend', (e) => {
   if (!tracking || sheetEl.classList.contains('on')) return;
   const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
-  if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8 && Date.now() - tt < 700) step(dx < 0 ? 1 : -1);
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.3 && Date.now() - tt < 900) step(dx < 0 ? 1 : -1);
   tracking = false;
 }, { passive: true });
 
