@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pl" data-theme="paper">
+<head>
+<meta charset="utf-8">
+<title>Planer AM 2027</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Planer biznesowy 2027 dla biura nieruchomości. Kalendarz, cele, strategia, przychody, marketing.">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Planer AM">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/marcellus.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="desk">
+  <div id="topline"><span class="brand"><img src="icons/icon-192.png" alt="" width="20" height="20">PLANER AM <b>2027</b></span><span id="dock-sub"></span></div>
+  <main id="book" class="book single" aria-live="polite"></main>
+</div>
+
+<nav id="dock" aria-label="Nawigacja planera">
+  <button id="dock-prev" class="db" aria-label="Poprzednia strona"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button id="dock-jump" class="db" aria-label="Spis stron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <button id="dock-label-btn" class="dl" aria-label="Bieżąca strona, otwórz spis"><span id="dock-label">Planer</span></button>
+  <button id="dock-today" class="db" aria-label="Dziś"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6" fill="currentColor"/></svg></button>
+  <button id="dock-search" class="db" aria-label="Szukaj"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+  <button id="dock-set" class="db" aria-label="Ustawienia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></button>
+  <button id="dock-next" class="db" aria-label="Następna strona"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+</nav>
+
+<div id="sheet" aria-hidden="false"></div>
+<div id="toast" role="status"></div>
+<input id="file-in" type="file" accept=".json,application/json" hidden>
+<noscript><p style="color:#fff;padding:2rem">Planer wymaga włączonej obsługi JavaScript.</p></noscript>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
