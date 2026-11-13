@@ -238,7 +238,7 @@ function smart(S, id) {
     <div class="card">${bar('flag', 'POTENCJALNE WYZWANIA')}<div class="card-b"><p class="hint">Co może przeszkodzić i jak temu zaradzę?</p>${bl(F, 'ch', 6)}</div></div>
     <div class="card">${bar('trophy', 'SPRAWDZIAN SUKCESU')}<div class="card-b"><p class="hint">Skąd będę wiedzieć, że osiągnąłem cel?</p>${[1, 2, 3, 4].map((x) => `<div class="cl">${F.ck('mc' + x)}${F.in('ml' + x, { ph: `Etap ${x}` })}</div>`).join('')}<div class="cl">${F.ck('done')}<span class="cl-t">Data osiągnięcia celu</span>${F.dt('dd')}</div><p class="sig">${icon('star')}<span>Świętuj swoje postępy!</span></p></div></div>
    </div>
-   ${ribbon('Marz. Planuj. Działaj. Osiągaj.')}
+   ${ribbon('Myśl odważnie. Planuj. Działaj. Osiągaj.')}
    <div class="pg-tools"><button class="btn-s" data-add="smart">${icon('plus')}<span>Dodaj kolejny cel</span></button>${n > 1 && idx === n ? `<button class="btn-s" data-del="smart">${icon('trash')}<span>Usuń tę stronę</span></button>` : `<button class="btn-s" data-clear="${id}">${icon('trash')}<span>Wyczyść stronę</span></button>`}</div>
   </div>`;
 }
@@ -363,7 +363,7 @@ function month(S, id) {
   const [y, mm] = id.split(':')[1].split('-').map(Number), m = mm - 1;
   const F = fields(S, id);
   const rows = C.monthGrid(y, m), st = C.monthStats(y, m);
-  const weeks = C.weekStarts().filter((w) => C.weekMonth(w) === m);
+  const weeks = C.weeksOfMonth(m);
   const weekOf = (d) => C.iso(C.addDays(d, -C.dow(d)));
   const body = rows.map((r) => {
     const first = r.find(Boolean), wk = weekOf(first), wn = C.isoWeek(first).week;

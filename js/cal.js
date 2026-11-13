@@ -115,9 +115,16 @@ export function weekStarts(y = YEAR) {
 }
 
 // Do którego miesiąca należy tydzień (po pierwszym dniu roku 2027 w tygodniu)
+// miesiąc, do którego należy tydzień (jak w ISO: decyduje czwartek); pierwszy tydzień, który zaczyna się w grudniu 2026, należy do stycznia
 export function weekMonth(mon, y = YEAR) {
-  for (let i = 0; i < 7; i++) { const d = addDays(mon, i); if (d.getUTCFullYear() === y) return d.getUTCMonth(); }
-  return 11;
+  const thu = addDays(mon, 3);
+  if (thu.getUTCFullYear() < y) return 0;
+  if (thu.getUTCFullYear() > y) return 11;
+  return thu.getUTCMonth();
+}
+// wszystkie tygodnie, które mają choć jeden dzień w danym miesiącu (do skrótów w kalendarzu miesiąca)
+export function weeksOfMonth(m, y = YEAR) {
+  return weekStarts(y).filter((w) => { for (let i = 0; i < 7; i++) { const d = addDays(w, i); if (d.getUTCFullYear() === y && d.getUTCMonth() === m) return true; } return false; });
 }
 
 export function fmtShort(d) { return `${d.getUTCDate()} ${MON3[d.getUTCMonth()]}`; }

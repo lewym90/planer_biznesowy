@@ -60,7 +60,7 @@ function renderSide() {
   const side = $('#side'); if (!side) return;
   const cur = pages[idx], kind = cur.id.split(':')[0];
   const curMonth = kind === 'month' ? Number(cur.id.slice(11, 13)) - 1 : kind === 'week' ? C.weekMonth(C.parse(cur.id.slice(5))) : new Date().getFullYear() === 2027 ? new Date().getMonth() : 0;
-  const weeks = C.weekStarts().filter((w) => C.weekMonth(w) === curMonth);
+  const weeks = C.weeksOfMonth(curMonth);
   side.innerHTML = `<div class="sd-brand"><img src="icons/icon-192.png" alt="" width="40" height="40"><div><b>PLANER AM</b><span>Biznesowy 2027</span></div></div>
   <nav class="sd-nav">${NAV.map(([id, t, ic]) => `<button class="${kind === id.split(':')[0] ? 'on' : ''}" data-go="${id}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>
   <span class="sd-h">Miesiące</span><div class="sd-mon">${C.MON3.map((m, i) => `<button class="${kind === 'month' && i === curMonth ? 'on' : ''}" data-go="month:2027-${C.pad(i + 1)}">${m}</button>`).join('')}</div>
@@ -238,7 +238,7 @@ function openJump() {
   const ids = [['toc', 'Spis treści', 'book'], ['year', 'Rok 2027', 'calendar'], ['strategy', 'Strategia', 'chart'], ['dates', 'Ważne daty', 'calendar'], ['goals', 'Cele roczne', 'target'], ['smart:1', 'Cele SMART', 'flag'], ['income', 'Przychody', 'dollar'], ['mkt:1', 'Marketing', 'megaphone'], ['notes:1', 'Notatki', 'pen']];
   const cur = pages[idx];
   const curMonth = cur.id.startsWith('month:') ? Number(cur.id.slice(11, 13)) - 1 : cur.id.startsWith('week:') ? C.weekMonth(C.parse(cur.id.slice(5))) : new Date().getFullYear() === 2027 ? new Date().getMonth() : 0;
-  const weeks = C.weekStarts().filter((w) => C.weekMonth(w) === curMonth);
+  const weeks = C.weeksOfMonth(curMonth);
   openSheet(`<div class="sh-h"><div class="sh-t"><small>Przejdź do</small><h3>Strony planera</h3></div><button class="ib x" data-close aria-label="Zamknij">${icon('x')}</button></div>
   <div class="sh-b"><div class="jump">${ids.map(([id, t, ic]) => `<button class="jb ${cur.id === id || cur.id.split(':')[0] === id.split(':')[0] && id.includes(':') ? 'on' : ''}" data-go="${id}">${icon(ic)}<span>${t}</span></button>`).join('')}</div>
   <span class="fl">Miesiąc</span><div class="chips">${C.MON3.map((m, i) => `<button class="chip ${i === curMonth ? 'on' : ''}" data-go="month:2027-${C.pad(i + 1)}">${m}</button>`).join('')}</div>
