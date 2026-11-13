@@ -20,6 +20,10 @@ function setTheme(t) {
 try { setTheme(localStorage.getItem(LS_THEME) || 'paper'); } catch (e) { setTheme('paper'); }
 
 // ---------- narzędzia ----------
+// iOS ignoruje user-scalable=no: blokada powiększania gestem palców i dwukrotnym dotknięciem (jak w innych aplikacjach)
+['gesturestart', 'gesturechange', 'gestureend'].forEach((t) => document.addEventListener(t, (e) => e.preventDefault(), { passive: false }));
+document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || (e.scale && e.scale !== 1)) e.preventDefault(); }, { passive: false });
+document.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
 const spreadMode = () => false;
 const fitPages = () => document.documentElement.style.setProperty('--pgh', scroller.clientHeight + 'px');
 window.addEventListener('resize', fitPages); window.addEventListener('orientationchange', () => setTimeout(fitPages, 200));

@@ -18,7 +18,7 @@ const MONTH_QUOTES = [
   'Dobre relacje z klientami to najlepszy kapitał.',
   'Nowy sezon, nowe możliwości. Wracamy na tory.',
   'Co mierzysz, to rośnie. Sprawdź swoje liczby.',
-  'Domykaj sprawy. Sprawdzone do końca.',
+  'Domykaj sprawy. Doprowadź do końca.',
   'Podsumuj rok, podziękuj sobie i zaplanuj więcej.',
 ];
 const MONTH_RIBBON = [
@@ -32,7 +32,7 @@ const MONTH_RIBBON = [
   'Zbierz siły, zaplanuj jesień.',
   'Wracamy do pełnego tempa.',
   'Złota jesień, złote transakcje.',
-  'Sprawdzone do końca.',
+  'Doprowadź do końca.',
   'Dobry koniec roku to dobry początek następnego.',
 ];
 
@@ -96,7 +96,7 @@ function toc(S, ctx) {
     ['briefcase', 'Planery tygodniowe', 'Pięćdziesiąt trzy tygodnie z harmonogramem godzinowym', ctx.firstWeek],
     ['pen', 'Notatki', 'Strony w linie na wszystko inne', 'notes:1'],
   ];
-  return `${head('book', 'SPIS <em>TREŚCI</em>', 'Twój planer na rok 2027', 'Sprawdzone do końca.')}
+  return `${head('book', 'SPIS <em>TREŚCI</em>', 'Twój planer na rok 2027', 'Doprowadź do końca.')}
   <div class="pg-body">
    <div class="toc">${items.map(([ic, t, d, go], i) => `<a class="toc-i" data-go="${go}"><b class="toc-n">${i + 1}</b><span class="toc-ic">${icon(ic)}</span><span class="toc-t"><strong>${t}</strong><small>${d}</small></span>${icon('right', 'toc-ar')}</a>`).join('')}</div>
    <div class="toc-m"><div class="bar">${icon('calendar')}<span>SKOK DO MIESIĄCA</span></div><div class="chips">${C.MONTHS.map((m, i) => `<a class="chip" data-go="month:2027-${C.pad(i + 1)}">${C.MON3[i]}</a>`).join('')}</div></div>
@@ -178,7 +178,7 @@ function dates(S) {
   const pr = (i) => ['W', 'Ś', 'N'].map((x, j) => `<label class="rad s" title="${['Wysoki', 'Średni', 'Niski'][j]}"><input type="radio" name="dates|r${i}.p" data-k="dates|r${i}.p" value="${['Wysoki', 'Średni', 'Niski'][j]}" ${S.get(`dates|r${i}.p`) === ['Wysoki', 'Średni', 'Niski'][j] ? 'checked' : ''}><i></i><span>${x}</span></label>`).join('');
   const rows = Array.from({ length: n }, (_, i) => `<div class="tr">${F.dt(`r${i}.d`)}<span class="dn" data-dayfor="dates|r${i}.d"></span>${F.in(`r${i}.e`, { ph: i === 0 ? 'Co i kiedy' : '' })}${F.sel(`r${i}.c`, DATE_CATS, { ph: '' })}<span class="prs">${pr(i)}</span>${F.in(`r${i}.n`, { cls: 'hs' })}</div>`).join('');
   const q = [['Q1 (sty–mar)', 'q1'], ['Q2 (kwi–cze)', 'q2'], ['Q3 (lip–wrz)', 'q3'], ['Q4 (paź–gru)', 'q4']];
-  const todo = ['Terminy podatkowe i ZUS', 'Odnowienia umów pośrednictwa', 'Ubezpieczenie OC pośrednika', 'Licencje, uprawnienia i szkolenia', 'Spotkania zespołu i przeglądy', 'Prezentacje i wprowadzenie ofert', 'Kampanie marketingowe', 'Przeglądy finansowe', 'Święta i obserwancje'];
+  const todo = ['Terminy podatkowe i ZUS', 'Odnowienia umów pośrednictwa', 'Ubezpieczenie OC pośrednika', 'Licencje, uprawnienia i szkolenia', 'Spotkania zespołu i podsumowania', 'Prezentacje i nowe oferty', 'Kampanie marketingowe', 'Rozliczenia i podsumowania finansowe', 'Święta i dni wolne'];
   return `${head('calendar', 'WAŻNE DATY <em>i terminy</em>', 'Planuj z wyprzedzeniem. Skup się. Osiągaj więcej.', 'Dobrze zaplanowany harmonogram tworzy więcej możliwości i większy sukces.')}
   <div class="pg-body">
    <div class="row3">${fld('home', 'Nazwa firmy', `<input class="ln" data-k="_|name" value="${esc(nameOf(S))}" autocomplete="off">`)}${fld('calendar', 'Rok', '<input class="ln" value="2027" readonly>')}${fld('target', 'Moje 3 priorytety roku', F.in('top', { ph: '1. … 2. … 3. …' }))}</div>
