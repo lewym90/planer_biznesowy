@@ -8,7 +8,7 @@ let pages = buildPages(S);
 let idx = 0;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const book = $('#book'), sheetEl = $('#sheet'), toastEl = $('#toast');
+const scroller = $('#scroller'), book = $('#book'), sheetEl = $('#sheet'), toastEl = $('#toast');
 const LS_THEME = 'am-planer-theme';
 
 // ---------- motyw ----------
@@ -20,7 +20,9 @@ function setTheme(t) {
 try { setTheme(localStorage.getItem(LS_THEME) || 'paper'); } catch (e) { setTheme('paper'); }
 
 // ---------- narzędzia ----------
-const spreadMode = () => window.innerWidth >= 1080 && window.innerWidth / window.innerHeight > 1.15;
+const spreadMode = () => false;
+const fitPages = () => document.documentElement.style.setProperty('--pgh', scroller.clientHeight + 'px');
+window.addEventListener('resize', fitPages); window.addEventListener('orientationchange', () => setTimeout(fitPages, 200));
 const byId = (id) => pages.findIndex((p) => p.id === id);
 function toast(msg, ms = 2600) {
   toastEl.textContent = msg; toastEl.classList.add('on');
@@ -49,7 +51,8 @@ function sheetHtml(i) {
 function render(dir = 0, keepScroll = false) {
   const sp = spreadMode();
   idx = Math.max(0, Math.min(pages.length - 1, idx));
-  const y = window.scrollY;
+  fitPages();
+  const y = scroller.scrollTop;
   let html;
   if (sp) {
     const l = leftOf(idx);
@@ -59,7 +62,7 @@ function render(dir = 0, keepScroll = false) {
     idx = l === 0 ? 0 : l;
   } else html = sheetHtml(idx);
   book.className = `book ${sp ? 'spread' : 'single'} ${dir > 0 ? 'go-f' : dir < 0 ? 'go-b' : ''}`;
-  book.innerHTML = `<div class="spiral" aria-hidden="true"></div>${html}`;
+  book.innerHTML = html;
   $$('.pg[data-id]', book).forEach(initPage);
   const cur = pages[idx];
   $('#dock-label').textContent = cur.name;
@@ -68,7 +71,7 @@ function render(dir = 0, keepScroll = false) {
   $('#dock-next').disabled = (sp ? leftOf(idx) + (idx === 0 ? 1 : 2) : idx + 1) >= pages.length;
   document.title = `${cur.name} · Planer AM 2027`;
   try { history.replaceState(null, '', '#' + cur.id); } catch (e) { /* file:// */ }
-  if (keepScroll) window.scrollTo(0, y); else window.scrollTo(0, 0);
+  scroller.scrollTop = keepScroll ? y : 0;
 }
 
 function initPage(el) {
@@ -347,11 +350,11 @@ $('#dock-set').addEventListener('click', openSettings);
 
 // ---------- gesty przewracania ----------
 let tx = 0, ty = 0, tt = 0, tracking = false;
-$('#desk').addEventListener('touchstart', (e) => {
+scroller.addEventListener('touchstart', (e) => {
   tracking = e.touches.length === 1 && !e.target.closest('input,textarea,select,.scrollx,.mcal,.slot');
   if (tracking) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; tt = Date.now(); }
 }, { passive: true });
-$('#desk').addEventListener('touchend', (e) => {
+scroller.addEventListener('touchend', (e) => {
   if (!tracking || sheetEl.classList.contains('on')) return;
   const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
   if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8 && Date.now() - tt < 700) step(dx < 0 ? 1 : -1);

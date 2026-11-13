@@ -36,5 +36,5 @@ js/cal.js             kalendarz 2027, święta, tygodnie ISO
 js/store.js           zapis danych
 js/pages.js           wszystkie strony planera
 js/app.js             nawigacja, arkusze, szukanie, kopie, eksport
-fonts/ icons/         Marcellus, Archivo, logo AM
+fonts/ icons/         Marcellus, Archivo, ikony
 ```

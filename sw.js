@@ -1,5 +1,5 @@
 // Service worker: planer działa w pełni offline. Zmień VERSION przy każdej aktualizacji plików.
-const VERSION = 'am-planer-2027-v1';
+const VERSION = 'am-planer-2027-v2';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/app.js', 'js/cal.js', 'js/pages.js', 'js/store.js', 'js/ui.js',

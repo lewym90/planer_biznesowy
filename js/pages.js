@@ -74,7 +74,7 @@ function cover(S) {
     <div class="cv-year"><i></i><span>2027</span><i></i></div>
     <h1 class="cv-h">PLANER</h1>
     <div class="cv-sub"><i></i><span>B I Z N E S O W Y</span><i></i></div>
-    <div class="cv-seal"><img src="icons/icon-512.png" alt="Logo AM" width="120" height="120"></div>
+    <div class="cv-seal"><img src="icons/icon-512.png" alt="Logo planera" width="120" height="120"></div>
     <div class="cv-name">${esc(nameOf(S))}</div>
     <div class="cv-tag">Planuj. Skup się. Działaj. Osiągaj.</div>
     ${SKY}
